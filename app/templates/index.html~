@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - index.html {% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello,
+    {% if current_user.is_authenticated() %}
+        {{ current_user.username }}
+    {% else %}
+        Stranger
+    {% endif %}!
+    </h1>
+</div>
+{{ wtf.quick_form(form) }}
+<!--
+<form action="" method="post" name="login">
+    {{ form.hidden_tag() }}
+    <p>
+        please enter your OpenID:<br>
+        {{ form.name(size=10) }}<br>
+    </p>
+    <p><input type="submit" value="ok"></p>
+</form>
+-->
+{% endblock %}
