@@ -17,19 +17,25 @@
 <body>
 
 <div>
-    <h1>完整demo</h1>
 <form method="POST">
 {{ form.hidden_tag() }}
-{{ form.title.label }} {{ form.title() }}
-{{ form.keywords.label }} {{ form.keywords() }}
-<p>
-{{ form.lead.label }} {{ form.lead() }}
-</p>
-<p>
-{{ form.editor1() }}	
-</p>
-{{ form.submit() }}
+{{ form.title.label }} {{ form.title(class="form-control") }}
+{{ form.editor1.label }} {{ form.editor1(id="editor",class="form-horizontal") }}
+{{ form.is_show.label }} {{ form.is_show(class="form-horizontal") }}
+<p></p>
+{{ form.auth.label }} {{ form.auth(class="form-control") }}
+{{ form.src.label }} {{ form.src(class="form-control") }}
+{{ form.lead.label }} {{ form.lead(class="form-control") }}
+{{ form.keywords.label }} {{ form.keywords(class="form-control") }}
+{{ form.edit.label }} {{ form.edit(class="form-control") }}
+{{ form.modiy_time.label }} {{ form.modiy_time(class="form-control") }}	
+<p></p>
+{{ form.submit(class="btn btn-primary btn-lg btn-block") }}
 </form>
+
+<!--
+{{ wtf.quick_form(form) }}
+-->
 </div>
 
 <script type="text/javascript">

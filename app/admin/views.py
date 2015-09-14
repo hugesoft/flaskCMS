@@ -25,9 +25,7 @@ def add_content():
     
 @admin.route('/content/<id>',methods=['GET','POST'])
 def update_content(id):
-    print(id)
     form = UeditorForm()
- #   content_data = Content.query.filter_by(id=id).first()
     content_data = Content.query.get(int(id))
 
     if form.validate_on_submit(): 
