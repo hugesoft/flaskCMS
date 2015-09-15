@@ -5,6 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from config import config
 from flask.ext.mail import Mail
 from flask.ext.login import LoginManager
+from flask.ext.moment import Moment
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -14,7 +15,8 @@ bootstrap = Bootstrap()
 db = SQLAlchemy()
 mail = Mail()
 app = Flask(__name__)
-    
+moment = Moment()
+
 def create_app(config_name): 
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
@@ -24,7 +26,8 @@ def create_app(config_name):
     mail.init_app(app)
     bootstrap.init_app(app)  
     db.init_app(app)
-    
+    moment = Moment(app)
+
     #app入口处
     #admin
     from .admin import admin as admin_blueprint

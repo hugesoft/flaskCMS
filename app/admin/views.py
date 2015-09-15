@@ -2,18 +2,17 @@
 import os
 import re
 import json
+import time
 
 from flask import render_template, url_for,make_response,request
 from . import admin
 from .. import app
 from .. import db
-from ..models import Content,User
+from ..models import Content
 from uploader import Uploader
 from Forms import UeditorForm
-from flask import session,redirect
-from datetime import datetime
-import time
-import datetime
+from flask import redirect
+from flask.ext.moment import Moment
 
 @admin.route('/content/',methods=['GET','POST'])
 def add_content():
@@ -52,6 +51,14 @@ def update_content(id):
         form.edit.data = content.editor
 
     return render_template('content/content.html',form=form)
+
+@admin.route('/list/<b_id>,<s_id>', methods=['GET','POST'])
+def list_title(b_id, s_id):
+    list = db.session.query(Content.id,Content.title, \
+        Content.content,Content.modity_time,Content.editor). \
+        filter_by(big_class_id=b_id,small_class_id=s_id).all()
+
+    return render_template('content/list_admin.html',title=list)
 
 @admin.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
 def upload():
