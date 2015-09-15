@@ -1,4 +1,4 @@
-#!/home/mmx/flask/flaskCMS/venv/bin/python
+#!/home/mmx/flaskCMS/venv/bin/python2
 
 # -*- coding: utf-8 -*-
 import re

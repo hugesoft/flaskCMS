@@ -17,6 +17,7 @@
 <body>
 
 <div>
+
 <form method="POST">
 {{ form.hidden_tag() }}
 {{ form.title.label }} {{ form.title(class="form-control") }}
@@ -28,11 +29,11 @@
 {{ form.lead.label }} {{ form.lead(class="form-control") }}
 {{ form.keywords.label }} {{ form.keywords(class="form-control") }}
 {{ form.edit.label }} {{ form.edit(class="form-control") }}
-{{ form.modiy_time.label }} {{ form.modiy_time(class="form-control") }}	
+{{ form.pub_time.label }} {{ form.pub_time(class="form-control") }}
 <p></p>
 {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
 </form>
-
+-
 <!--
 {{ wtf.quick_form(form) }}
 -->

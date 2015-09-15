@@ -11,36 +11,50 @@ from ..models import Content,User
 from uploader import Uploader
 from Forms import UeditorForm
 from flask import session,redirect
+from datetime import datetime
+import time
+import datetime
 
 @admin.route('/content/',methods=['GET','POST'])
 def add_content():
     form = UeditorForm()
-    if form.validate_on_submit():
-        content_data = Content(title='test1', content=form.editor1.data)
-        db.session.add(content_data)
-        db.session.commit()
+#    tm = time.strftime("%Y-%m-%d %H:%M:%S")
+#    print '%s ' % tm
+    form.pub_time.data = time
 
-    return render_template('content/content.html',form=form,
-        editor1=form.editor1.data)
+    if form.validate_on_submit():
+        content =Content(title=form.title.data,content=form.editor1.data,
+            editor=form.edit.data)
+
+        db.session.add(content)
+        db.session.commit()
+        return redirect(url_for('admin.update_content',id=content.id))
+
+    return render_template('content/content.html',form=form)
     
 @admin.route('/content/<id>',methods=['GET','POST'])
 def update_content(id):
     form = UeditorForm()
-    content_data = Content.query.get(int(id))
-
-    if form.validate_on_submit(): 
-        content_data.content = form.editor1.data
-        db.session.add(content_data)
-        db.session.commit()    
-    else:
-        form.editor1.data = content_data.content
+    content = Content.query.get(int(id))
     
-    return render_template('content/content.html',form=form,
-        editor1=form.editor1.data)  
+    if form.validate_on_submit(): 
+        content.content = form.editor1.data
+        content.title = form.title.data
+        content.pub_time = form.pub_time.data
+        content.editor = form.edit.data
+
+        db.session.add(content)
+        db.session.commit()            
+    else:
+        form.editor1.data = content.content
+        form.title.data = content.title
+        form.pub_time.data = content.pub_time
+        form.edit.data = content.editor
+
+    return render_template('content/content.html',form=form)
 
 @admin.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
 def upload():
-    print "mmx:%s " % os.path.join(app.static_folder,'ueditor','php','config.json')
     """UEditor文件上传接口
 
     config 配置文件

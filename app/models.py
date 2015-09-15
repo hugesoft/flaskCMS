@@ -36,7 +36,7 @@ class Content(db.Model):
     modity_time = db.Column(db.DateTime,default=datetime.utcnow)
     
     def __repr__(self):
-        return self.id
+        return '<Content %r>' % self.content
       
 
 

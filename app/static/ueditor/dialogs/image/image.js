@@ -375,7 +375,7 @@
                 duplicate: true,
                 fileSingleSizeLimit: imageMaxSize,    // 默认 2 M
                 compress: editor.getOpt('imageCompressEnable') ? {
-                    width: imageCompressBorder,
+                    width:  imageCompressBorder,
                     height: imageCompressBorder,
                     // 图片质量，只有type为`image/jpeg`的时候才有效。
                     quality: 90,
