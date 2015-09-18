@@ -52,13 +52,22 @@ def update_content(id):
 
     return render_template('content/content.html',form=form)
 
-@admin.route('/list/<b_id>,<s_id>', methods=['GET','POST'])
-def list_title(b_id, s_id):
+@admin.route('/list/', methods=['GET','POST'])
+def list_title():
+    b_id = request.args.get('b_id',1,type=int)
+    s_id = request.args.get('s_id',1,type=int)
+
     list = db.session.query(Content.id,Content.title, \
         Content.content,Content.modity_time,Content.editor). \
-        filter_by(big_class_id=b_id,small_class_id=s_id).all()
+        filter_by(big_class_id=b_id,small_class_id=s_id).order_by \
+        (Content.modity_time).all()
 
-    return render_template('content/list_admin.html',title=list)
+    list2 = Content.query.filter_by(big_class_id=b_id,small_class_id=s_id). \
+        order_by(Content.modity_time)
+    
+    list3 = Content.query.order_by(Content.modity_time).paginate(2,3).items
+
+    return render_template('content/list_admin.html',title=list3)
 
 @admin.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
 def upload():
