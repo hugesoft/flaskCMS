@@ -62,12 +62,13 @@ def list_title():
         filter_by(big_class_id=b_id,small_class_id=s_id).order_by \
         (Content.modity_time).all()
 
-    list2 = Content.query.filter_by(big_class_id=b_id,small_class_id=s_id). \
-        order_by(Content.modity_time)
+    pagination = Content.query.filter_by(big_class_id=b_id,small_class_id=s_id). \
+        order_by(Content.modity_time).paginate(1, 3, error_out=False)
     
     list3 = Content.query.order_by(Content.modity_time).paginate(2,3).items
 
-    return render_template('content/list_admin.html',title=list3)
+    return render_template('content/list_admin.html',title=list3, \
+        pagination=pagination)
 
 @admin.route('/upload/', methods=['GET', 'POST', 'OPTIONS'])
 def upload():
