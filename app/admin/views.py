@@ -54,6 +54,9 @@ def update_content(id):
 
 @admin.route('/list/', methods=['GET','POST'])
 def list_title():
+    page_max = 3
+    page = request.args.get('page',1,type=int)
+
     b_id = request.args.get('b_id',1,type=int)
     s_id = request.args.get('s_id',1,type=int)
 
@@ -63,9 +66,9 @@ def list_title():
         (Content.modity_time).all()
 
     pagination = Content.query.filter_by(big_class_id=b_id,small_class_id=s_id). \
-        order_by(Content.modity_time).paginate(1, 3, error_out=False)
+        order_by(Content.modity_time).paginate(page, page_max, error_out=False)
     
-    list3 = Content.query.order_by(Content.modity_time).paginate(2,3).items
+    list3 = Content.query.order_by(Content.modity_time).paginate(page,page_max).items
 
     return render_template('content/list_admin.html',title=list3, \
         pagination=pagination)
